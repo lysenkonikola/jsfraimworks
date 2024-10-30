@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <h1 class="text-center mb-4">To-Do List</h1>
+  
+  <!-- Інпут для додавання нових завдань -->
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Add a new task..." [(ngModel)]="newTask">
+    <div class="input-group-append">
+      <button class="btn btn-primary" (click)="addTask()">Add Task</button>
+    </div>
+  </div>
+
+  <!-- Виведення повідомлення, якщо список порожній -->
+  <div *ngIf="tasks.length === 0" class="alert alert-info text-center">
+    No tasks available. Add some tasks to get started!
+  </div>
+
+  <!-- Список завдань -->
+  <ul class="list-group">
+    <li *ngFor="let task of tasks; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+      <!-- Назва завдання з перекресленням для завершених -->
+      <span [class.text-decoration-line-through]="task.completed">{{ task.name }}</span>
+
+      <!-- Кнопки для завершення і видалення -->
+      <div>
+        <button class="btn btn-success btn-sm me-2" (click)="toggleTaskCompletion(task)">
+          <i class="fas" [class.fa-undo]="task.completed" [class.fa-check]="!task.completed"></i> 
+          {{ task.completed ? 'Undo' : 'Complete' }}
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="deleteTask(i)">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
